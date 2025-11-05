@@ -7,15 +7,16 @@ st.markdown("<h1 style='text-align: center;'> Troco para um produto da Marcenari
 
 #Entrada de dados
 valor = st.number_input("Digite o valor do produto:", min_value=0.0)
-quantidade_produtos = st.number_input("Digite a quantidade de produtos:", min_value=1.0, step=1.0)
+quantidade_produtos = st.number_input("Digite a quantidade de produtos:", min_value=0, step=1)
+st.write(f"O preço desse produto é R$ {valor * quantidade_produtos:.2f}.")
 pago = st.number_input("Digite o valor pago pelo cliente:", min_value=0.0)
 
 #Processamento de dados
 troco = (pago - (valor * quantidade_produtos))
 real = 100 // 100
 centavo = 100
-quantidade = valor * quantidade_produtos
+x = valor * quantidade_produtos
 pago = quantidade_produtos * valor
 
 #Saída de dados
-st.write(f"O troco a ser dado ao cliente é de R$ {troco:.2f}.")
+st.write(f"O troco a ser dado ao cliente é de R$ {troco:.2f}.",)
