@@ -1,17 +1,17 @@
 import streamlit as st
 
-def celsius_fahrenheit(temp):
-        return (temp * 1.8) + 32
-def celsius_kelvin(temp):
-        return temp + 273.15
-def F_celsius (temp):
-        return (temp - 32) * 5/9
-def F_kelvin (temp):
-        return F_celsius(temp) + 273.15
-def K_celsius(temp):
-        return temp - 273.15
-def K_fahrenheit(temp):
-        return celsius_fahrenheit(K_celsius(temp))
+def celsius_fahrenheit(t):
+        return (t * 1.8) + 32
+def celsius_kelvin(t):
+        return t + 273.15
+def F_celsius (t):
+        return (t - 32) * 5/9
+def F_kelvin (t):
+        return F_celsius(t) + 273.15
+def K_celsius(t):
+        return t - 273.15
+def K_fahrenheit(t):
+        return celsius_fahrenheit(K_celsius(t))
 
 #Problema Temperatura
 st.sidebar.title("Conversor de Temperatura")
