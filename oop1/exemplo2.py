@@ -8,8 +8,19 @@ p1.preco = float(input("\tPreço: R$"))
 p1.saldo = int(input("\Quantidade: "))
 
 #Saída de dados
-print ("Dados do produto")
-print (f"\tNome do produto: {p1.nome}")
-print (f"\tValor de compra: {p1.preco}")
-print (f"\tQuantidade em estoque {p1.saldo}")
-print (f"\tValor total em estoque: R$ {p1.valorTotalEmEstoque()}")
+print (p1.dadosDoProduto())
+
+#Adicionar produtos 
+q = int(input ("Digite o número de produtos a ser adicionado ao estoque: "))
+p1.adicionarProdutos(q)
+
+#Saída de dados 2
+print ("---Dados atualizados---")
+print (p1.dadosDoProduto)
+
+#Remover produtos
+q = int(input ("Digite o número de produtos a ser removido do estoque: "))
+p1.removerProdutos(q)
+#Saída de dados 3
+print ("---Dados atualizados---")
+print (p1.dadosDoProduto)
