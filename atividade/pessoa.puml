@@ -1,0 +1,8 @@
+@startuml pessoa
+class pessoa{
+        +nome_pessoa:str
+        +idade: int
+        +idade_pessoa(): int
+        
+   }
+@enduml

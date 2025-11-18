@@ -1,0 +1,7 @@
+@startuml funcionario
+class funcionario{
+    + nome_funcionario:str
+    +salario: float
+    + salario_funcionario(): float
+    }
+@enduml 
