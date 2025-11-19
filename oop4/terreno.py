@@ -1,42 +1,58 @@
 class Terreno:
-    #Membros da classe
-    #1º Membro da classe
-    __largura:float
-    __comprimento:float
+    # 1º Membro da classe - atributos privados
+    __largura: float
+    __comprimento: float
 
-    #2º Membro da classe
-
-    #Propriedades largura
+    # Propriedade largura
     @property
-    def largura (self):
+    def largura(self):
         return self.__largura
+
     @largura.setter
-    def largura (self, largura:float):
+    def largura(self, largura: float):
         self.__largura = largura
 
-    #Propriedades do comprimento 
-        @property
-        def comprimento(self):
-            return self.__comprimento
-        @comprimento.setter
-        def comprimento(self, comrpimento:float):
-            self.__comprimento = comprimento
+    # Propriedade comprimento
+    @property
+    def comprimento(self):
+        return self.__comprimento
 
-    #3º Membro - Construtor
-    def __init__(self, largura:float, comprimento:float):
+    @comprimento.setter
+    def comprimento(self, comprimento: float):
+        self.__comprimento = comprimento
+
+    # Construtor
+    def __init__(self, largura: float, comprimento: float):
+        self.largura = largura
         self.comprimento = comprimento
-        self.largura = largura 
 
-    #4 Membro - Métodos 
-    def __area (self) -> float:
+    # Métodos privados
+    def __area(self) -> float:
         return self.comprimento * self.largura
-    def __preco(self, preco:float) -> float:
-        return self.area * preco
-    def dadosTerreno(self, preco:float) -> str:
-        saida = f'''
-        Largua: {self.largura}
-        Comprimento: {self.comprimento}
-        Area: {self.__area():.2f}
-        Preco: {self.__preco(preco):.2f}
 
+    def __preco(self, preco: float) -> float:
+        return self.__area() * preco  # corrigido: __area()
+
+    # Método público
+    def dadosTerreno(self, preco: float) -> str:
+        saida = f'''
+Largura: {self.largura}
+Comprimento: {self.comprimento}
+Área: {self.__area():.2f}
+Preço: R$ {self.__preco(preco):.2f}
 '''
+        return saida
+
+
+# Programa principal
+try:
+    largura = float(input("Digite a largura do terreno: "))
+    comprimento = float(input("Digite o comprimento do terreno: "))
+    preco = float(input("Digite o preço do metro quadrado: "))
+
+    terreno = Terreno(largura, comprimento)
+
+    print(terreno.dadosTerreno(preco))
+
+except ValueError:
+    print("Erro: Entrada inválida. Por favor, digite um número válido.")
