@@ -1,33 +1,90 @@
 import streamlit as st
 
-class Pessoa:
-    def __init__(self, nome: str, idade: int):
-        self.nome = nome
-        self.idade = idade
+# Título
+TITULO = "Análise de Dados Pessoais"
+st.title(TITULO)
+st.markdown("---")
 
-#Problema idade
-st.title("Comparação de Idades")
+# Declaração de variáveis
+if 'dados_pessoas' not in st.session_state:
+    st.session_state.dados_pessoas = []
 
-#Entrada de dados
-st.header("Dados da Pessoa 1")
-nome1 = st.text_input("Nome da Pessoa 1")
-idade1 = st.number_input("Idade da Pessoa 1", min_value=0, value=0)
+# Entrada de Dados
+n = st.number_input(
+    "Quantas pessoas serão digitadas?",
+    min_value=0,
+    step=1,
+    key='num_pessoas'
+)
 
-st.header("Dados da Pessoa 2")
-nome2 = st.text_input("Nome da Pessoa 2")
-idade2 = st.number_input("Idade da Pessoa 2", min_value=0, value=0)
+st.subheader("Entrada de Dados")
+dados_coletados = []
 
-#Saída de dados
-if st.button("Comparar"):
-    pessoa1 = Pessoa(nome1, idade1)
-    pessoa2 = Pessoa(nome2, idade2)
-    st.subheader("Resultados")
+for i in range(n):
+    st.markdown(f"**Dados da {i+1}ª pessoa:**")
 
+    nome = st.text_input(
+        f"Nome da {i+1}ª pessoa:",
+        key=f'nome_{i}'
+    )
 
+    idade = st.number_input(
+        f"Idade da {i+1}ª pessoa:",
+        min_value=0,
+        step=1,
+        key=f'idade_{i}'
+    )
 
-    if pessoa1.idade > pessoa2.idade:
-        st.success(f"{pessoa1.nome} é mais velho(a) com {pessoa1.idade} anos.")
-    elif pessoa2.idade > pessoa1.idade:
-        st.success(f"{pessoa2.nome} é mais velho(a) com {pessoa2.idade} anos.")
+    altura = st.number_input(
+        f"Altura (em metros) da {i+1}ª pessoa:",
+        min_value=0.0,
+        format="%.2f",
+        key=f'altura_{i}'
+    )
+
+    # Armazenar somente se o nome não estiver vazio
+    if nome and idade >= 0 and altura >= 0:
+        dados_coletados.append({
+            "nome": nome,
+            "idade": idade,
+            "altura": altura
+        })
+
+st.markdown("---")
+
+# Processamento de Dados
+if st.button("Calcular Resultados", type="primary"):
+    if not dados_coletados and n > 0:
+        st.warning("Preencha todos os campos antes de calcular.")
+
+    elif n == 0:
+        st.info("Nenhum dado para processar. Defina o número de pessoas.")
+
+    elif len(dados_coletados) != n:
+        st.warning(
+            f"Faltam dados: Foram preenchidos {len(dados_coletados)} de {n} registros. "
+            "Complete todos os campos."
+        )
+
     else:
-        st.warning("As duas pessoas têm a mesma idade")
+        soma_alturas = sum(p['altura'] for p in dados_coletados)
+        altura_media = soma_alturas / n
+
+        pessoas_menores_16 = [p for p in dados_coletados if p['idade'] < 16]
+
+        porcentagem_menores = (len(pessoas_menores_16) / n) * 100 if n > 0 else 0.0
+
+        # Saída de Dados
+        st.header("Resultados da Análise")
+        st.write(f"**Altura média:** {altura_media:.2f} m")
+        st.write(
+            f"**Pessoas com menos de 16 anos:** {len(pessoas_menores_16)} "
+            f"({porcentagem_menores:.1f}%)"
+        )
+
+        if pessoas_menores_16:
+            st.subheader("Nomes das pessoas com menos de 16 anos:")
+            nomes_str = "\n".join([f"- {p['nome']}" for p in pessoas_menores_16])
+            st.markdown(nomes_str)
+        else:
+            st.info("Nenhuma pessoa registrada com menos de 16 anos.")

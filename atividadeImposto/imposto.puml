@@ -1,0 +1,33 @@
+@startuml Imposto
+
+
+class Contribuintes {
+- __nome: str
+- __rendaAnual: float
++ nome: str
++ rendaAnual: float
++ gastoTotalAnual(): float
+}
+
+
+
+class PessoaFisica {
+- __gastosSaude: float
++ gastosSaude: float
++ gastoTotalAnual(): float
+}
+
+
+
+class PessoaJuridica {
+- __numFuncionarios: int
++ numFuncionarios: int
++ gastoTotalAnual(): float
+}
+
+
+Contribuintes <|-- PessoaFisica
+Contribuintes <|-- PessoaJuridica
+
+
+@enduml
